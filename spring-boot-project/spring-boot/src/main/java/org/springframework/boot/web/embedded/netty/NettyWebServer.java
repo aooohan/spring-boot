@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2021 the original author or authors.
+ * Copyright 2012-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -147,8 +147,8 @@ public class NettyWebServer implements WebServer {
 
 	private boolean isPermissionDenied(Throwable bindExceptionCause) {
 		try {
-			if (bindExceptionCause instanceof NativeIoException) {
-				return ((NativeIoException) bindExceptionCause).expectedErr() == ERROR_NO_EACCES;
+			if (bindExceptionCause instanceof NativeIoException nativeIoException) {
+				return nativeIoException.expectedErr() == ERROR_NO_EACCES;
 			}
 		}
 		catch (Throwable ex) {

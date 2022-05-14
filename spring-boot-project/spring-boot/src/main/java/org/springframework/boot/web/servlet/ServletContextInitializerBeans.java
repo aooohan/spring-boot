@@ -102,20 +102,20 @@ public class ServletContextInitializerBeans extends AbstractCollection<ServletCo
 
 	private void addServletContextInitializerBean(String beanName, ServletContextInitializer initializer,
 			ListableBeanFactory beanFactory) {
-		if (initializer instanceof ServletRegistrationBean) {
-			Servlet source = ((ServletRegistrationBean<?>) initializer).getServlet();
+		if (initializer instanceof ServletRegistrationBean<?> servletRegistrationBean) {
+			Servlet source = servletRegistrationBean.getServlet();
 			addServletContextInitializerBean(Servlet.class, beanName, initializer, beanFactory, source);
 		}
-		else if (initializer instanceof FilterRegistrationBean) {
-			Filter source = ((FilterRegistrationBean<?>) initializer).getFilter();
+		else if (initializer instanceof FilterRegistrationBean<?> filterRegistrationBean) {
+			Filter source = filterRegistrationBean.getFilter();
 			addServletContextInitializerBean(Filter.class, beanName, initializer, beanFactory, source);
 		}
-		else if (initializer instanceof DelegatingFilterProxyRegistrationBean) {
-			String source = ((DelegatingFilterProxyRegistrationBean) initializer).getTargetBeanName();
+		else if (initializer instanceof DelegatingFilterProxyRegistrationBean delegatingFilterProxyRegistrationBean) {
+			String source = delegatingFilterProxyRegistrationBean.getTargetBeanName();
 			addServletContextInitializerBean(Filter.class, beanName, initializer, beanFactory, source);
 		}
-		else if (initializer instanceof ServletListenerRegistrationBean) {
-			EventListener source = ((ServletListenerRegistrationBean<?>) initializer).getListener();
+		else if (initializer instanceof ServletListenerRegistrationBean<?> servletListenerRegistrationBean) {
+			EventListener source = servletListenerRegistrationBean.getListener();
 			addServletContextInitializerBean(EventListener.class, beanName, initializer, beanFactory, source);
 		}
 		else {
@@ -140,8 +140,7 @@ public class ServletContextInitializerBeans extends AbstractCollection<ServletCo
 	}
 
 	private String getResourceDescription(String beanName, ListableBeanFactory beanFactory) {
-		if (beanFactory instanceof BeanDefinitionRegistry) {
-			BeanDefinitionRegistry registry = (BeanDefinitionRegistry) beanFactory;
+		if (beanFactory instanceof BeanDefinitionRegistry registry) {
 			return registry.getBeanDefinition(beanName).getResourceDescription();
 		}
 		return "unknown";

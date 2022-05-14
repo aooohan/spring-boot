@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2021 the original author or authors.
+ * Copyright 2012-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -146,8 +146,8 @@ public class TomcatWebServer implements WebServer {
 
 	private Context findContext() {
 		for (Container child : this.tomcat.getHost().findChildren()) {
-			if (child instanceof Context) {
-				return (Context) child;
+			if (child instanceof Context context) {
+				return context;
 			}
 		}
 		throw new IllegalStateException("The host does not contain a Context");
